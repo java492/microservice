@@ -1,0 +1,47 @@
+###开启Hystrix断路器
+feign:
+  httpclient:
+    #关闭ApacheHttpClient
+    enabled: false
+    max-connections: 50 # 连接池连接最大闲置数,缺省值 200
+    time-to-live: 600 # 连接最大闲置时间，单位为秒,缺省值为900秒
+  #开启okHttp
+  okhttp:
+    enabled: true
+  #是否开启熔断
+  sentinel:
+    enabled: true
+  #请求和响应GZIP压缩支持和支持压缩的mime types
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+####配置请求超时时间
+#hystrix:
+#  command:
+#    #作用范围,默认为全局
+#    default:
+#      execution:
+#        #隔离决策,信号量和线程池
+#        isolation:
+#          thread:
+#            #超时时间
+#            timeoutInMilliseconds: 10000
+
+#feign 默认开启支持ribbon
+ribbon:
+  #指的是建立连接所用的时间,适用于网络状况正常的情况下,两端连接所用的时间,默认1000ms
+  ReadTimeout: 5000
+  #指的是建立连接后从服务器读取到可用资源所用的时间,默认1000ms
+  ConnectTimeout: 3000
+  #当前服务重试次数
+  MaxAutoRetries: 0
+  #切换服务重试次数
+  MaxAutoRetriesNextServer: 0
+  #是否所有操作都重试,false只对get请求有效,true对get,post都有效
+  #GET方式请求无论是连接异常还是读取异常,都会进行重试
+  #非GET方式请求,只有连接异常时,才会进行重试
+  OkToRetryOnAllOperations: false

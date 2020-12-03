@@ -1,0 +1,27 @@
+spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    #redis的模式1表示单机,2表示sentinel,3表示cluster
+    model: 1
+    cluster:
+      # 集群重试次数
+      maxRedirects: 3
+      nodes: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005
+    # 超时时间
+    timeout: 5000
+    jedis:
+      pool:
+        maxActive: 120 # 最大连接数
+        maxIdle: 30 # 最大空闲实例的个数
+        minIdle: 0 #最小空闲实例个数
+        maxWait: -1 # 获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间,默认-1
+        numTestsPerEvictionRun: 1024 # 每个逐出器运行期间要检查的最大对象数
+        timeBetweenEvictionRunsMillis: 30000 # 释放扫描的扫描间隔
+        minEvictableIdleTimeMillis: 1800000 # 连接的最小空闲时间
+        softMinEvictableIdleTimeMillis: 10000 # 连接控歘按时间多久后释放，当空闲时间>该值且空闲连接>最大空闲连接数时直接释放
+        maxWaitMillis: 1500 # 获得链接时的最大等待毫秒数，小于0：阻塞不确定时间，默认-1
+        testWhileIdle: true # 在空闲时检查有效性，默认false
+        blockWhenExhausted: false # 连接耗尽时是否阻塞，false报异常，true阻塞超时,默认true

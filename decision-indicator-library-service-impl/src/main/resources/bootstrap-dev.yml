@@ -1,0 +1,21 @@
+server:
+  port: 8700
+spring:
+  #根据不同的active来获取不同的命名空间
+  cloud:
+    nacos:
+      config:
+        shared-configs:
+          - data-id: common-feign.yml
+          - data-id: common-redis.yml
+          - data-id: common-seata.yml
+          - data-id: common-mysql.yml
+        namespace: 659aba13-d752-4120-9f4c-86141ad010c1
+      discovery:
+        namespace: 659aba13-d752-4120-9f4c-86141ad010c1
+    #配置sentinel
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      #心跳启动
+      eager: true

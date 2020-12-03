@@ -1,0 +1,52 @@
+server:
+  port: 80
+spring:
+  #根据不同的active来获取不同的命名空间
+  cloud:
+    nacos:
+      config:
+        namespace: 659aba13-d752-4120-9f4c-86141ad010c1
+        shared-configs:
+          - data-id: common-redis.yml
+      discovery:
+        namespace: 659aba13-d752-4120-9f4c-86141ad010c1
+    #网关配置
+    gateway:
+      #开启从注册中心自动获取服务id
+      discovery:
+        locator:
+          enabled: true
+          #将服务id转成小写
+          lower-case-service-id: true
+      routes:
+          #路由唯一id
+        - id: user-manager-route
+          #以lb://开头表示从注册中心获取服务,值为需要转发的服务名称
+          uri: lb://user-manager-service
+          #匹配/user-manager/之后的全部路径
+          predicates:
+            - Path=/user-manager/**
+        - id: indicator-manager-route
+          uri: lb://indicator-manager-service
+          predicates:
+            - Path=/indicator-manager/**
+    #配置sentinel
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      #心跳启动
+      eager: true
+      #持久化
+      datasource:
+        ds:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: gateway-service-dev-sentnel
+            groupId: DEFAULT_GROUP
+            namespace: 659aba13-d752-4120-9f4c-86141ad010c1
+            data-type: json
+            rule-type: flow
+# 要跳过token校验的url
+token:
+  skip-urls:
+    - /login-manage/action

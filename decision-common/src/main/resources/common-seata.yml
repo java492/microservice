@@ -1,0 +1,26 @@
+#seata配置项
+seata:
+  #应用名称,默认使用 ${spring.application.name}
+  application-id: ${spring.application.name}
+  #事务组,默认default
+  tx-service-group: ${spring.application.name}-group
+  #相当于registry.conf文件配置
+  registry:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.discovery.server-addr}
+      cluster: default
+      namespace: 0e0da6c1-f88e-495f-ab9e-05dfac7bfcda
+  config:
+    type: nacos
+    nacos:
+      namespace: 0e0da6c1-f88e-495f-ab9e-05dfac7bfcda
+      group: SEATA_GROUP
+      server-addr: ${spring.cloud.nacos.config.server-addr}
+  #客户端配置
+  client:
+    tm:
+      #一阶段全局提交结果上报TC重试次数
+      commitRetryCount: 3
+      #一阶段全局回滚结果上报TC重试次数
+      rollbackRetryCount: 3

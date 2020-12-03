@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  application:
+      name: indicator-manager-service
+  #注册和配置中心
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        #文件后缀
+        file-extension: yml
+      discovery:
+        server-addr: 127.0.0.1:8848
